@@ -1152,6 +1152,13 @@ vlBool CVTFFile::Load(IO::Readers::IReader *Reader, vlBool bHeaderOnly)
 			this->Header->ResourceCount = 0;
 		}
 
+		// bail out if we have an unexpected format
+		if (this->Header->ImageFormat < 0 || this->Header->ImageFormat >= IMAGE_FORMAT_COUNT)
+		{
+			LastError.SetFormatted("Unexpected image format.");
+			throw 0;
+		}
+
 		// if we just want the header loaded, bail here
 		if(bHeaderOnly)
 		{
